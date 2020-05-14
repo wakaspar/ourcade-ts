@@ -1,28 +1,31 @@
-const express = require('express');
+import express, { Router } from 'express';
+import { json } from 'body-parser';
+import cors from 'cors';
+import { connect, connection as _connection } from 'mongoose';
+import Score, { find, findById } from './score.model';
+
 const app = express();
-const bodyParser = require('body-parser');
-const cors = require('cors');
-const mongoose = require('mongoose');
-const scoreRoutes = express.Router();
+const scoreRoutes = Router();
 const PORT = 5555;
 
-let Score = require('./score.model');
-
-app.use(cors());
-app.use(bodyParser.json());
-
-// Connect to Database
-mongoose.connect('mongodb://127.0.0.1:27017/scores', { useNewUrlParser: true });
-const connection = mongoose.connection;
-// db sanity check
-connection.once('open', function() {
-    console.log('MongoDB database connection established successfully');
-})
+//Prevent CORS errors
+app.use(function (req, res, next) {
+    res.setHeader('Access-Control-Allow-Origin', '*');
+    res.setHeader('Access-Control-Allow-Credentials', 'true');
+    res.setHeader('Access-Control-Allow-Methods', 'GET,HEAD,OPTIONS,POST,PUT,DELETE');
+    res.setHeader('Access-Control-Allow-Headers', 'Access-Control-Allow-Headers, Origin,Accept, X-Requested-With, Content-Type, Access-Control-Request-Method, Access-Control-Request-Headers');
+  
+    //Remove caching
+    res.setHeader('Cache-Control', 'no-cache');
+    next();
+  });
+  
+app.use(json());
 
 // SCORE : Route definitions
 // Get all scores
 scoreRoutes.route('/').get(function(req, res) {
-    Score.find(function(err, scores) {
+    find(function(err, scores) {
         if (err) {
             console.log(err);
         } else {
@@ -33,7 +36,7 @@ scoreRoutes.route('/').get(function(req, res) {
 // Get one score by :id
 scoreRoutes.route('/:id').get(function(req, res) {
     let id = req.params.id;
-    Score.findById(id, function(err, score) {
+    findById(id, function(err, score) {
         res.json(score);
     });
 });
@@ -50,7 +53,7 @@ scoreRoutes.route('/add').post(function(req, res) {
 });
 // Update one score by :id
 scoreRoutes.route('/update/:id').post(function(req, res) {
-    Score.findById(req.params.id, function(err, score) {
+    findById(req.params.id, function(err, score) {
         if (!score)
             res.status(404).send('data is not found');
         else
@@ -69,7 +72,7 @@ scoreRoutes.route('/update/:id').post(function(req, res) {
 });
 // Delete one score by :id
 scoreRoutes.route('/delete/:id').delete(function(req, res) {
-    Score.findById(req.params.id, function(err, score) {
+    findById(req.params.id, function(err, score) {
       score.delete()
           .then(score => {
               res.status(200).json({'score deleted: ': score});
