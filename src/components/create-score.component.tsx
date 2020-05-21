@@ -66,7 +66,7 @@ export default class CreateScore extends React.Component <IState, IProps> {
         //   this.props.history.push('/');
     }
     // CreateScore render statement
-    render() {
+    public render() {
       return (
         <div style={{marginTop: 10}}>
           <h3>Create New Score</h3>
