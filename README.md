@@ -1,6 +1,8 @@
 # Ourcade TS
 
-This project is still in development.  Ourcade is a TypeScript application with the end-goal of supporting user-curated scoreboards regarding pinball and arcade cabinet games.  The idea was born out of many conversations with fellow pinball and arcade gamers, as we discussed what sort of features we would like to see in an application to support our favorite hobby.  When I started learning TypeScript, I took a look at this idea again with the intention of building it out as a self-developed, self-supported, widely available application.
+This project is still in development.  
+
+Ourcade is a TypeScript application with the end-goal of supporting user-curated scoreboards regarding pinball and arcade cabinet games.  The idea was born out of many conversations with fellow pinball and arcade gamers, as we discussed what sort of features we would like to see in an application to support our favorite hobby.  When I started learning TypeScript, I took a look at this idea again with the intention of building it out as a self-developed, self-supported, widely available web application.
 
 Currently, we can CRUD users and scores, login/logout, and view an admin scoreboard which includes all current user scores.
 
@@ -9,7 +11,7 @@ Lots of features are still in design or development, including:
 - form validation
 - social features & leagues
 - personal score analytics
-- geo-locate coords of game played for location-based support
+- location-based score support
 - score image support
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
